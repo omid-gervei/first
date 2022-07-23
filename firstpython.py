@@ -1,8 +1,17 @@
-await download(path, 'teleCust1000t.csv')
-df = pd.read_csv('teleCust1000t.csv')
-X = df[['region', 'tenure','age', 'marital', 'address', 'income', 'ed', 'employ','retire', 'gender', 'reside']] .values
+import itertools
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.ticker import NullFormatter
+import pandas as pd
+import numpy as np
+import matplotlib.ticker as ticker
+from sklearn import preprocessing
+%matplotlib inline
+!wget -O loan_train.csv https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/ML0101ENv3/labs/loan_train.csv
+df = pd.read_csv('loan_train.csv')
+df.groupby(['Gender'])['loan_status'].value_counts(normalize=True)
+X = preprocessing.StandardScaler().fit(X).transform(X)
 y = df['custcat'].values
-X = preprocessing.StandardScaler().fit(X).transform(X.astype(float))
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.2, random_state=4)
 print ('Train set:', X_train.shape,  y_train.shape)
